@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>-->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+
+<div class="container">
+  <a href="#/" class="badge badge-info">Back</a>
+  <h3>Index: {{ ctrl_hits.index }} <span class="badge badge-secondary"><strong>{{ ctrl_hits.hitsCount}} </strong> hits</span></h3>
+  <div class="row">
+    
+      <div class="col-sm-6 col-sm-offset-3">
+          <div class="search_container"> 
+            <form ng-submit="ctrl_hits.search()">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search..(e.g. @IP:10.10.10.01 AND extension:JS)" ng-model="ctrl_hits.query">
+                    <span class="input-group-btn">
+                      <button class="btn btn-search" type="submit"><i class="fa fa-search fa-fw"></i> Search</button>
+                      <button ng-click="ctrl_hits.refresh()" class="btn btn-dark" type="button"><i class="fa fa-refresh"></i> Reload</button>
+                    </span>
+              </div>
+            </form>
+          </div>
+      </div>
+    
+  </div>
+  <div class="panel-group" id="accordion">
+
+    <div ng-repeat="(key, row) in ctrl_hits.data" class="panel panel-default">
+      <div class="panel-heading truncate-by-height">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#{{key}}">
+            <label ng-repeat="(key,value) in row._source">
+              <span class="badge badge-light"> {{key}}: </span> {{row._source[key]}}
+              &nbsp; 
+            </label> 
+          </a>
+        </h4>
+      </div>
+      <div id="{{key}}" class="panel-collapse collapse">
+        <div class="panel-body" ng-repeat="(key,value) in row._source">
+          <div class="row">
+            <div class="col-sm-2">
+              <span class="badge badge-dark">{{key}}</span> 
+            </div>
+            <div class="col-sm-10">
+              <textarea class="form-control" rows="1" type="text" ng-model="row._source[key]"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body">
+          <button ng-click="ctrl_hits.edit(row)" type="button" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i>Edit</button>
+        </div>
+      </div>
+    </div>
+
+  </div> 
+  <div ng-if="ctrl_hits.hitsCount > 20" class="pagination justify-content-center">
+    <button ng-disabled="ctrl_hits.from == 0" type="button" class="btn btn-dark btn-sm" ng-click="ctrl_hits.previous()">Previous</button>
+    <button ng-disabled="ctrl_hits.from >= ctrl_hits.hitsCount" type="button" class="btn btn-dark btn-sm" ng-click="ctrl_hits.next()">Next</button>
+  </div>
+</div>
