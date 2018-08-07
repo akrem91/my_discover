@@ -100,40 +100,12 @@ uiModules
     }else{
       this.from = this.from - 20;
     }
-    let type = typeof this.query;
-    if(type === "string"){
-      // Search with query
-      $http.get(`../api/my_discover/index/${this.index}/${this.query}/${this.from}`).then((response) => {
-        this.data = response.data.hits.hits;
-        this.hitsCount = response.data.hits.total;
-        this.convertObjectToString();
-      });
-    }else{
-      $http.get(`../api/my_discover/index/${this.index}/${this.from}`).then((response) => {
-        this.data = response.data.hits.hits;
-        this.hitsCount = response.data.hits.total;
-        this.convertObjectToString();
-      });    
-    }    
+    this.searchWithQuery(this.from);
   }
   // Get the next 20 hits
   this.next = function () {
     this.from = this.from + 20;
-    let type = typeof this.query;
-    if(type === "string"){
-      // Search with query
-      $http.get(`../api/my_discover/index/${this.index}/${this.query}/${this.from}`).then((response) => {
-        this.data = response.data.hits.hits;
-        this.hitsCount = response.data.hits.total;
-        this.convertObjectToString();
-      });
-    }else{
-      $http.get(`../api/my_discover/index/${this.index}/${this.from}`).then((response) => {
-        this.data = response.data.hits.hits;
-        this.hitsCount = response.data.hits.total;
-        this.convertObjectToString();
-      });
-    }
+    this.searchWithQuery(this.from);
   }
 
   // This function convert an object to string before displaying values in Textarea
@@ -145,6 +117,24 @@ uiModules
            row._source[key] = JSON.stringify(row._source[key]);
       });
     });
+  }
+  //Return documents matching a query
+  this.searchWithQuery = function (from) {
+    let type = typeof this.query;
+    if(type === "string"){
+      // Search with query
+      $http.get(`../api/my_discover/index/${this.index}/${this.query}/${from}`).then((response) => {
+        this.data = response.data.hits.hits;
+        this.hitsCount = response.data.hits.total;
+        this.convertObjectToString();
+      });
+    }else{
+      $http.get(`../api/my_discover/index/${this.index}/${from}`).then((response) => {
+        this.data = response.data.hits.hits;
+        this.hitsCount = response.data.hits.total;
+        this.convertObjectToString();
+      });    
+    }    
   }
   
 });
