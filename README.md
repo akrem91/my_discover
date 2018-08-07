@@ -1,6 +1,6 @@
 # MY_DISCOVER
 
-> It's a copie of Discover application with additional feature, possibility of updating indices data (Kibana 6.3.0)
+> It's a copie of Discover plugin with additional feature, possibility of updating indices data (Kibana 6.3.0)
 
 ---
 
