@@ -1,6 +1,6 @@
 {
   "name": "my_discover",
-  "version": "6.3.0",
+  "version": "6.2.4",
   "main": "index.js",
   "scripts": {
     "lint": "eslint",
